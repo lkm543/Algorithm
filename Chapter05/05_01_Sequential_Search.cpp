@@ -18,7 +18,7 @@ int Sequential_Search(int data[], int len, int target){
 int main()
 {
     int target;
-    int arr[10] = {12,27,35,36,47,52,52,52,68,74};
+    int arr[10] = {35,52,68,12,47,52,36,52,74,27};
     cout << "Please enter the target you would like to search:" << endl;
     cin >> target;
 
