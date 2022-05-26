@@ -17,17 +17,18 @@ class Graph{
         // 每個邊對應的 list 形成的向量
         vector<list<edge*>> edges;
         vector<int> color;
+        void DFS_Visit(int);
     public:
         Graph(int);
         void Print_Edges();
         bool Add_Edge(int, int, int=1);
         void DFS(int);
-        void DFS_Visit(int);
 };
 
 Graph::Graph(int v){
 	// 設定頂點數
 	vertex = v;
+    color.resize(vertex);
 	// 把向量的長度設為 vertex
 	edges.resize(vertex);
 }
@@ -58,7 +59,6 @@ bool Graph::Add_Edge(int from, int to, int weight){
 
 void Graph::DFS(int start){
     start--;
-    color.resize(vertex);
     // 把所有顏色塗成白色，0: 白色
     fill(color.begin(), color.end(), 0);
     // 從起點開始做深度優先搜尋
