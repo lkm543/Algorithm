@@ -22,7 +22,7 @@ typedef struct{
     int x, y;
 } Point;
 
-bool cmp(Point* a, Point* b){
+bool cmp(Point*& a, Point*& b){
     // 根據 x 座標由小到大排
     // 如果 x 座標相同，則根據 y 座標由小到大排
     // 注意這裡傳入資料為指標
