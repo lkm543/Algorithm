@@ -15,37 +15,27 @@ https://leetcode.com/problems/is-graph-bipartite/
 */
 
 class Solution{
-	// 記錄頂點是否造訪過（DFS 中的白、灰、黑）
-	vector<int> visited;
-	// 頂點的顏色，只有 0 或 1，而-1 代表還沒染過
+	// 頂點的顏色，只有 0, -1 或 1 三種
+	// -1, 1 代表顏色，0 代表還沒走過
 	vector<int> color;
-	bool DFS(int vertex, int color_now, vector<vector<int>>& graph){
-		// 頂點塗成灰色
-		visited[vertex] = 1;
+	bool DFS(int vertex, vector<vector<int>>& graph){
 		// 依序檢查相鄰節點
-		for (int i = 0; i < graph[vertex].size(); i++){         
-			int vertex_now = graph[vertex][i];
+		for (int neighbor : graph[vertex]){     
             // 如果相鄰節點的染色與 vertex 的染色衝突
-            // 比如 vertex 的染色是「0」，相鄰節點也被染為「0」
-            if (color[vertex_now] == color_now)
+            // 比如 vertex 的染色是「1」，相鄰節點也被染為「1」
+            if (color[neighbor] == color[vertex])
                 return false;
-            // 如果相鄰頂點是白色頂點（未造訪過）
-            if (visited[vertex_now] == 0){
-                // 如果相鄰頂點的染色是「-1」（未染色過）
-                if (color[vertex_now] == -1){
-                    // 把相鄰頂點染上「相反」顏色
-                    // vertex 染色為 1 時，相鄰頂點染上 0
-                    // vertex 染色為 0 時，相鄰頂點染上 1
-                    color[vertex_now] = !color_now;
-                }
+            // 如果相鄰頂點未造訪過
+            if (color[neighbor] == 0){
+                // 把相鄰頂點染上「相反」顏色
+                // vertex 染色為 1 時，相鄰頂點染上 -1
+                // vertex 染色為 -1 時，相鄰頂點染上 1
+                color[neighbor] = -1 * color[vertex];
                 // 往相鄰頂點繼續進行
-                bool flag = DFS(vertex_now,
-                                !color_now, graph);
+                bool flag = DFS(neighbor, graph);
                 if(!flag){return false;}
             }
 		} // end of for
-		// 頂點 vertex 處理完成
-		visited[vertex] = 2;
 		// 若從頂點 vertex 往下染色都不會發生衝突，回傳 true
 		return true;
 	}
@@ -54,19 +44,18 @@ public:
 	bool isBipartite(vector<vector<int>>& graph){
 		// 取出頂點個數
 		int vertex = graph.size();
-		visited.resize(vertex);
-		// -1 代表還未著色過（黑白染色）
-		color.resize(vertex,-1);
+		// 0 代表還未著色過（黑白染色）
+		color.resize(vertex, 0);
 
 		// 對所有白色頂點進行 DFS
 		// 過程中用 color 另外染色（與原本的白、灰、黑獨立）
-		// 染色順序為 0 1 0 1...
+		// 染色順序為 -1 1 -1 1...
 		for (int i = 0; i < vertex; i++){
-			if (visited[i] == 0){
-				color[i] = 0;
+			if (color[i] == 0){
+				color[i] = 1;
 				// 從起點開始，檢查能不能順利進行黑白染色
-				// 起點的染色為「0」
-				bool flag = DFS(i, 0, graph);
+				// 起點的染色為「1」
+				bool flag = DFS(i, graph);
 				// 如果染色過程中產生衝突，回傳 false
 				// 代表非二分圖
 				if(!flag){return false;}
