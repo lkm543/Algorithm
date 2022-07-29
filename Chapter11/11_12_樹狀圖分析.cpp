@@ -32,8 +32,7 @@ long long int DFS (
 {
     long long int h, max = 0;
     // 計算子樹們的高
-    for (int node : adj_list[idx])
-    {
+    for (int node : adj_list[idx]){
         h = DFS(adj_list, node);
         if (h > max)
             max = h;
