@@ -26,12 +26,15 @@ using namespace std;
 long long int ans = 0;
 
 // 深度優先搜尋
-long long int DFS (vector<vector<int>>& adj_list, int idx){
+long long int DFS (
+       vector<vector<int>>& adj_list,
+       int idx)
+{
     long long int h, max = 0;
     // 計算子樹們的高
-    for (auto iter = adj_list[idx].begin(); iter != adj_list[idx].end(); iter++)
+    for (int node : adj_list[idx])
     {
-        h = DFS(adj_list, *iter);
+        h = DFS(adj_list, node);
         if (h > max)
             max = h;
     }
