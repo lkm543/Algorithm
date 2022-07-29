@@ -19,9 +19,6 @@ https://leetcode.com/problems/peak-index-in-a-mountain-array/
 
 class Solution{
 public: 
-        // 極值不會出現在開頭或結尾
-        // i 從 1 到 arr.size()-2
-
     int peakIndexInMountainArray (vector<int>& arr){
         int lower = 1;
         int upper = arr.size() - 2;
