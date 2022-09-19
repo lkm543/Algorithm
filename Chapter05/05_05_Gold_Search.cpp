@@ -21,12 +21,12 @@ int Gold_Search(int data[], int len) {
         if(data[cut_1] > data[cut_2]){
             upper = cut_2;
             cut_2 = cut_1;
-            cut_1 = gold_2(lower, cut_2);
+            cut_1 = gold_2(lower, upper);
         }
         else{
             lower = cut_1;
             cut_1 = cut_2;
-            cut_2 = gold_1(cut_1, upper);
+            cut_2 = gold_1(lower, upper);
         }
     }
     for(int i = lower; i <= upper; i++){
