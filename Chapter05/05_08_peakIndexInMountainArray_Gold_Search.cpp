@@ -38,20 +38,20 @@ public:
             // 如果極值在 cut_2 左邊
             // cut_2 變為上界           
             // cut_1 變為下一輪的 cut_2
-            // 新切出下一輪的 cut_1（區間為 [lower, cut_2]）            
+            // 新切出下一輪的 cut_1（區間為原先的 [lower, cut_2]）            
             if (arr[cut_1] > arr[cut_2]){
                 upper = cut_2;
                 cut_2 = cut_1;
-                cut_1 = gold_1(lower, cut_2);
+                cut_1 = gold_1(lower, upper);
             }
             // 如果極值在 cut_1 右邊
             // cut_1 變為下界           
             // cut_2 變為下一輪的 cut_1
-            // 新切出下一輪的 cut_2（區間為 [cut_1, upper]）
+            // 新切出下一輪的 cut_2（區間為原先的 [cut_1, upper]）
             else {
                 lower = cut_1;
                 cut_1 = cut_2;
-                cut_2 = gold_2(cut_1, upper);
+                cut_2 = gold_2(lower, upper);
             }
         }
        // 因為這題不能無限切割下去（索引值必須是整數）
