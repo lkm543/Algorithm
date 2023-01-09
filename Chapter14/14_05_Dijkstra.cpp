@@ -75,7 +75,7 @@ bool Graph::Add_Edge(int from, int to, int weight){
     edges[from - 1].push_back(new edge{to - 1, weight});
 }
 
-// 排序函式，供priority_queue 使用
+// 排序函式，供priority_queue 使用，注意使用 > 才能從距離最近者開始取
 class compare{
     public:
         bool operator()(vertex* v1, vertex* v2){

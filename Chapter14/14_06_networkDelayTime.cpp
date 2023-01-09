@@ -37,7 +37,7 @@ public:
         // 改用鄰接列表儲存資料
         vector<vector<pair<int, int>>> edges(n + 1);
         // pair 中的 first 為連線的終點
-        // pair 中的 second 為連線的費用
+        // pair 中的 second 為連線的所需時間
         for (auto e : times) 
             edges[e[0]].push_back(make_pair(e[1], e[2]));
         

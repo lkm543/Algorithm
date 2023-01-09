@@ -115,7 +115,7 @@ int Graph::Network_Flow(int s, int t){
             }
         }
         max_flow += minimal;
-    }
+    } // end of while
     return max_flow;
 }
 

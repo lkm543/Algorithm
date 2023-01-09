@@ -18,7 +18,7 @@ typedef struct{
 	double prob;
 }vertex;
 
-// 排序函式，供priority_queue 使用
+// 排序函式，供priority_queue 使用，注意不等號與先前反向
 class compare{
     public:
         bool operator()(vertex* v1, vertex* v2){
@@ -36,8 +36,8 @@ public:
 
         // 改用鄰接列表儲存資料
         vector<vector<pair<int, double>>> graph(n);
-        // pair 中的 first 為連線的終點
-        // pair 中的 second 為連線的機率
+        // pair 中的 first 為邊的終點
+        // pair 中的 second 為邊的成功機率
         for (int i = 0; i < edges.size(); i++) {
             auto e = edges[i];
             graph[e[0]].push_back(make_pair(e[1], succProb[i]));
