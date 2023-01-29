@@ -8,6 +8,53 @@ https://leetcode.com/problems/number-of-enclaves/
 */
 
 class Solution{
+// BFS 的函式
+void BFS(vector<vector<int>>& grid, int rows, int cols, int start){
+	queue<int> Position;
+
+	// 傳入的 start 是開始 BFS 的起點
+	// 轉換成 (x,y) 形式
+	int x = start / cols;
+	int y = start % cols;
+
+	// 透過兩個陣列設定上下左右四個方向的 x、y 偏移量
+	int direction_x[4] = {-1,1,0,0};
+	int direction_y[4] = {0,0,-1,1};
+
+	Position.push(start);
+	while(!Position.empty()){
+		// 取出 Queue 中最前面的元素，並轉換為 (x,y) 形式
+		int P = Position.front();
+		Position.pop();
+		int x = P / cols;
+		int y = P % cols;
+
+        if(grid[x][y] == 0)
+            continue;
+
+		// 把取出的點改為 0				
+        grid[x][y] = 0;
+
+		// 透過 x、y 偏移量，往上下左右四個方向移動
+		for (int i = 0; i < 4 ; i++){
+			int new_x = x + direction_x[i];
+			int new_y = y + direction_y[i];
+			// 邊界處理
+			if (new_x < 0 || new_y < 0)
+                continue;
+			if (new_x >= rows||new_y >= cols)
+                continue;
+
+			// 如果移動後是 0，不需加到 Queue 中
+			if (grid[new_x][new_y] == 0){
+				continue;
+			}
+			// 移動後方格是 1 時需要加到 Queue 中處理
+			Position.push(new_x * cols + new_y);
+		}
+	} // end of while
+} // end of BFS
+
 public:
 	int numEnclaves(vector<vector<int>>& grid){
 		// 取得 grid 的大小
@@ -15,20 +62,18 @@ public:
 		int cols = grid[0].size();
 		// 記錄飛地數目
 		int sum = 0;
-
-    	queue<int> Position;
         
 		for (int i = 0; i < rows; i++){
 			// Position = x*cols+y
 			// 檢查最左邊的直行
 			if (grid[i][0]){
 				// 對應的 Position 是 i*cols
-                Position.push(i * cols);
+                BFS(grid, rows, cols, i * cols);
 			}
 			// 檢查最右邊的直行
 			if (grid[i][cols - 1]){
 				// 對應的 Position 是 i * cols + (cols - 1)
-                Position.push(i * cols + (cols - 1));
+                BFS(grid, rows, cols, i * cols + (cols - 1));
 			}
 		}
         
@@ -36,51 +81,14 @@ public:
 			// 檢查最上面的橫列
 			if (grid[0][j]){
 				// 對應的 Position 是 j
-                Position.push(j);
+                BFS(grid, rows, cols, j);
 			}
 			// 檢查最下面的橫列
 			if (grid[rows - 1][j]){
 				// 對應的 Position 是 (rows-1)*cols+j
-                Position.push((rows - 1) * cols + j);
+                BFS(grid, rows, cols, (rows - 1) * cols + j);
 			}
 		}
-
-		// 透過兩個陣列設定上下左右四個方向的 x、y 偏移量
-		int direction_x[4] = {-1,1,0,0};
-		int direction_y[4] = {0,0,-1,1};
-
-		while(!Position.empty()){
-			// 取出 Queue 中最前面的元素，並轉換為 (x,y) 形式
-			int P = Position.front();
-			Position.pop();
-			int x = P / cols;
-			int y = P % cols;
-
-	        if(grid[x][y] == 0)
-	            continue;
-
-			// 把取出的點改為 0				
-	        grid[x][y] = 0;
-
-			// 透過 x、y 偏移量，往上下左右四個方向移動
-			for (int i = 0; i < 4 ; i++){
-				int new_x = x + direction_x[i];
-				int new_y = y + direction_y[i];
-				// 邊界處理
-				if (new_x < 0 || new_y < 0)
-	                continue;
-				if (new_x >= rows||new_y >= cols)
-	                continue;
-
-                // 如果移動後是 0，不需加到 Queue 中
-                if (grid[new_x][new_y] == 0){
-                    continue;
-                }
-                // 移動後方格是 1 時需要加到 Queue 中處理
-                Position.push(new_x * cols + new_y);
-            }
-        } // end of while
-
 		// 用雙重迴圈檢查剩下幾個 1
 		for (int i = 0; i < rows; i++){
 			for (int j = 0; j < cols; j++){
