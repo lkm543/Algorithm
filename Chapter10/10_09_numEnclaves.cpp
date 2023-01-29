@@ -70,7 +70,7 @@ public:
 				if (new_x < 0 || new_y < 0)
 	                continue;
 				if (new_x >= rows||new_y >= cols)
-	                    continue;
+	                continue;
 
                 // 如果移動後是 0，不需加到 Queue 中
                 if (grid[new_x][new_y] == 0){
