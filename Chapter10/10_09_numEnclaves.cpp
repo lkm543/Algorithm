@@ -45,32 +45,32 @@ public:
 			}
 		}
 
-	// 透過兩個陣列設定上下左右四個方向的 x、y 偏移量
-	int direction_x[4] = {-1,1,0,0};
-	int direction_y[4] = {0,0,-1,1};
+		// 透過兩個陣列設定上下左右四個方向的 x、y 偏移量
+		int direction_x[4] = {-1,1,0,0};
+		int direction_y[4] = {0,0,-1,1};
 
-	while(!Position.empty()){
-		// 取出 Queue 中最前面的元素，並轉換為 (x,y) 形式
-		int P = Position.front();
-		Position.pop();
-		int x = P / cols;
-		int y = P % cols;
+		while(!Position.empty()){
+			// 取出 Queue 中最前面的元素，並轉換為 (x,y) 形式
+			int P = Position.front();
+			Position.pop();
+			int x = P / cols;
+			int y = P % cols;
 
-        if(grid[x][y] == 0)
-            continue;
+	        if(grid[x][y] == 0)
+	            continue;
 
-		// 把取出的點改為 0				
-        grid[x][y] = 0;
+			// 把取出的點改為 0				
+	        grid[x][y] = 0;
 
-		// 透過 x、y 偏移量，往上下左右四個方向移動
-		for (int i = 0; i < 4 ; i++){
-			int new_x = x + direction_x[i];
-			int new_y = y + direction_y[i];
-			// 邊界處理
-			if (new_x < 0 || new_y < 0)
-                continue;
-			if (new_x >= rows||new_y >= cols)
-                    continue;
+			// 透過 x、y 偏移量，往上下左右四個方向移動
+			for (int i = 0; i < 4 ; i++){
+				int new_x = x + direction_x[i];
+				int new_y = y + direction_y[i];
+				// 邊界處理
+				if (new_x < 0 || new_y < 0)
+	                continue;
+				if (new_x >= rows||new_y >= cols)
+	                    continue;
 
                 // 如果移動後是 0，不需加到 Queue 中
                 if (grid[new_x][new_y] == 0){
