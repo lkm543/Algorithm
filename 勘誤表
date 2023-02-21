@@ -39,7 +39,7 @@ Q4-A：選項應改為 1、2、3、4、5、6、7
 
 9-6：
 入度的符號應為：deg-(A)
-出度的符號應為：deg-(A)
+出度的符號應為：deg+(A)
 
 10-46:
 Chapter10/10_09_numEnclaves.cpp 更新，須在BFS內的while loop中檢查grid[x][y]是否為零，否則按原本寫法會TLE
