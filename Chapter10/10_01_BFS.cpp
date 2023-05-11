@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <vector>
 #include <list>
+#include <queue>
+
 using namespace std;
 
 // 代表邊的結構
@@ -20,7 +22,7 @@ class Graph{
         Graph(int);
         void Print_Edges();
         bool Add_Edge(int, int, int=1);
-        BFS(int);
+        void BFS(int);
 };
 
 Graph::Graph(int v){
@@ -87,13 +89,13 @@ void Graph::BFS(int start){
                 iter++
         ){
 			// 只處理相鄰頂點中白色者
-			if (color[*iter] == 0){
+			if (color[(*iter)->to] == 0){
 				// 印出目前處理的節點
-				cout << (*iter) + 1 << "->";
+				cout << (*iter)->to + 1 << "->";
 				// 放入 Queue 中
-				BFS_Q.push(*iter);
+				BFS_Q.push((*iter)->to);
 				// 塗成灰色
-				color[*iter] = 1;
+				color[(*iter)->to] = 1;
 			}
 		} // end of for
 		// current 處理完後把 current 塗成黑色
